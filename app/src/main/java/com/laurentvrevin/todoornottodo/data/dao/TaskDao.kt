@@ -1,10 +1,12 @@
-package com.laurentvrevin.todoornottodo.data
+package com.laurentvrevin.todoornottodo.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.laurentvrevin.todoornottodo.data.model.Task
+
 @Dao
 interface TaskDao {
     @Query("SELECT * FROM tasks")

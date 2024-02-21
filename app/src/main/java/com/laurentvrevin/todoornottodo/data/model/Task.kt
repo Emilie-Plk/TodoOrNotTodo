@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.data
+package com.laurentvrevin.todoornottodo.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
