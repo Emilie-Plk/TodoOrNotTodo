@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo
+package com.laurentvrevin.todoornottodo.ui.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
