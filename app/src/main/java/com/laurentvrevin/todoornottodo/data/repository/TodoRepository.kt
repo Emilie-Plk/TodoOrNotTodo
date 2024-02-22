@@ -4,8 +4,9 @@ import com.laurentvrevin.todoornottodo.data.dao.TaskDao
 import com.laurentvrevin.todoornottodo.data.model.Task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class TodoRepository(private val taskDao: TaskDao) {
+class TodoRepository @Inject constructor(private val taskDao: TaskDao) {
     val selectAll = taskDao.getAllTasks()
 
     suspend fun insertTodo(task: Task){
