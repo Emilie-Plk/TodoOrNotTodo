@@ -1,20 +1,27 @@
 package com.laurentvrevin.todoornottodo.data.dao
 
-import androidx.lifecycle.LiveData
+
 import androidx.room.Dao
-import androidx.room.Delete
+
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.laurentvrevin.todoornottodo.data.model.Task
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
     @Query("SELECT * FROM tasks")
-    fun getAllTasks(): LiveData<List<Task>>
+    fun getAllTasks(): Flow<List<Task>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task: Task)
 
-    @Delete
-    suspend fun deleteTask(task: Task)
+    @Query("UPDATE tasks SET isComplete = :isComplete WHERE id = :id")
+    suspend fun updateTask(isComplete:Boolean, id:Int)
+
+    @Query("DELETE from tasks WHERE id = :id")
+    suspend fun deleteTask(id:Int)
+    @Query("DELETE from tasks ")
+    suspend fun deleteAllTasks()
 }
