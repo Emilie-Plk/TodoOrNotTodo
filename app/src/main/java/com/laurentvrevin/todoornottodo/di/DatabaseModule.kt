@@ -1,8 +1,9 @@
-package com.laurentvrevin.todoornottodo.data.database
+package com.laurentvrevin.todoornottodo.di
 
 import android.content.Context
 import androidx.room.Room
 import com.laurentvrevin.todoornottodo.data.dao.TaskDao
+import com.laurentvrevin.todoornottodo.data.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

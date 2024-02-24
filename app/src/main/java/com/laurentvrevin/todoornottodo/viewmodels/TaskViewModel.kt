@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.ui.ViewModel
+package com.laurentvrevin.todoornottodo.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

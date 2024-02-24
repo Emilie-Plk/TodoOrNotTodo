@@ -27,9 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.laurentvrevin.todoornottodo.ui.ViewModel.TaskViewModel
-import com.laurentvrevin.todoornottodo.ui.components.MonFloatingActionButton
-import com.laurentvrevin.todoornottodo.ui.screens.TaskInputForm
+import com.laurentvrevin.todoornottodo.viewmodels.TaskViewModel
+import com.laurentvrevin.todoornottodo.compose.components.MonFloatingActionButton
+import com.laurentvrevin.todoornottodo.compose.screens.TaskInputForm
 import com.laurentvrevin.todoornottodo.ui.theme.TodoOrNotTodoTheme
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.ui.screens
+package com.laurentvrevin.todoornottodo.compose.screens
 
 
 import androidx.compose.runtime.Composable

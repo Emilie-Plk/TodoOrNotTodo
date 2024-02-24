@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.ui.components
+package com.laurentvrevin.todoornottodo.compose.components
 
 import androidx.compose.runtime.Composable
 
