@@ -3,15 +3,19 @@ package com.laurentvrevin.todoornottodo.ui.activities
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
+import androidx.compose.foundation.layout.WindowInsets
+
 import androidx.compose.foundation.layout.fillMaxSize
+
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,8 +39,6 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         setContent {
             TodoOrNotTodoTheme {
                 MainScreen()
@@ -52,28 +54,35 @@ fun MainScreen() {
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
     var showTaskInput by remember { mutableStateOf(false) }
+    val windowInsets: WindowInsets = BottomSheetDefaults.windowInsets
 
+    //Scaffold c'est comme mon container principale
     Scaffold(
         floatingActionButton = {
             MonFloatingActionButton(onClick = { showTaskInput = !showTaskInput })
         }
-    ) { innerPadding ->
+    )
+    { innerPadding ->
+        //Surface c'est un peu comme dire à quoi ça doit ressembler à l'intérieur
+
         Surface(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
                 .padding(16.dp),
+            color = MaterialTheme.colorScheme.background)
 
-            color = MaterialTheme.colorScheme.background
-        ) {
+        {
             if (showTaskInput) {
                 ModalBottomSheet(
+                    windowInsets = windowInsets,
                     onDismissRequest = {
                         showTaskInput = false
                                        },
                     sheetState = sheetState
                 ) {
-                    TaskInputForm(onAddTask = { task ->
+                    TaskInputForm(
+                        onAddTask = { task ->
 
                         taskViewModel.addTask(task)
                         scope.launch { sheetState.hide() }.invokeOnCompletion {

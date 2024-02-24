@@ -29,9 +29,7 @@ fun MonFloatingActionButton(
         containerColor = backgroundColor,
         shape = shape
     ) {
-        // Ici, tu peux personnaliser le contenu du bouton
         Icon(Icons.Filled.Add, contentDescription = "Ajouter")
-
     }
 
 }
