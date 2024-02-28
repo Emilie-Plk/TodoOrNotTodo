@@ -48,7 +48,6 @@ fun BottomSheetScreen() {
         Column(
             modifier = Modifier
                 .padding(paddingValues)
-                .padding(16.dp)
                 .fillMaxSize()
                 //background blanc quand bottomSheets ouvert et gris clair quand fermé
                 .background(
@@ -84,7 +83,7 @@ fun BottomSheets(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             TextField(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(8.dp, 24.dp, 8.dp, 8.dp),
                 value = "",
                 onValueChange = { /* todo */ },
                 label = { Text("Title") },
@@ -108,7 +107,7 @@ fun BottomSheets(
                 label = { Text("Deadline") },
             )
             Button(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(8.dp, 8.dp, 16.dp, 8.dp),
                 onClick = onAddButtonClicked,
             ) {
                 Text("Add Task")
