@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun MonFloatingActionButton(
+fun CustomFloatingButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     backgroundColor: Color = MaterialTheme.colorScheme.primary,
@@ -36,10 +36,9 @@ fun MonFloatingActionButton(
 @Preview
 @Composable
 fun PreviewMFAB() {
-    MonFloatingActionButton(
+    CustomFloatingButton(
         onClick = {},
         modifier = Modifier.padding(16.dp),
-
         shape =  RoundedCornerShape(10.dp)
     )
 

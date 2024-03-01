@@ -3,7 +3,9 @@ package com.laurentvrevin.todoornottodo.compose.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -15,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.laurentvrevin.todoornottodo.data.model.Task
@@ -28,54 +31,64 @@ fun TaskInputForm(onAddTask: (Task) -> Unit) {
     var datetime by remember { mutableStateOf("") }
     var deadline by remember { mutableStateOf("") }
 
-    Column(
+    Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .clip(RoundedCornerShape(15.dp, 15.dp, 0.dp, 0.dp)),
+        shadowElevation = 32.dp,
     ) {
-        TextField(
-            value = title,
-            onValueChange = { title = it },
-            label = { Text("Title") }
-        )
-        TextField(
-            value = description,
-            onValueChange = { description = it },
-            label = { Text("Description") }
-        )
-        TextField(
-            value = datetime,
-            onValueChange = { datetime = it },
-            label = { Text("Date & Time") }
-        )
-        TextField(
-            value = deadline,
-            onValueChange = { deadline = it },
-            label = { Text("Deadline") }
-        )
-        Button(
-            onClick = {
-                onAddTask(Task(
-                    title = title,
-                    description = description,
-                    datetime = datetime,
-                    deadline = deadline,
-                    id = id
-                ))
-                // Reset fields after submission
-                title = ""
-                description = ""
-                datetime = ""
-                deadline = ""
-            }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Add Task")
+            TextField(
+                modifier = Modifier.padding(8.dp, 16.dp, 8.dp, 8.dp),
+                value = title,
+                onValueChange = { title = it },
+                label = { Text("Title") }
+            )
+            TextField(
+                modifier = Modifier.padding(8.dp),
+                value = description,
+                onValueChange = { description = it },
+                label = { Text("Description") }
+            )
+            TextField(
+                modifier = Modifier.padding(8.dp),
+                value = datetime,
+                onValueChange = { datetime = it },
+                label = { Text("Date & Time") }
+            )
+            TextField(
+                modifier = Modifier.padding(8.dp),
+                value = deadline,
+                onValueChange = { deadline = it },
+                label = { Text("Deadline") }
+            )
+            Button(
+                onClick = {
+                    onAddTask(
+                        Task(
+                            title = title,
+                            description = description,
+                            datetime = datetime,
+                            deadline = deadline,
+                            id = id
+                        )
+                    )
+                    // Reset fields after submission
+                    title = ""
+                    description = ""
+                    datetime = ""
+                    deadline = ""
+                }
+            ) {
+                Text("Add Task")
+            }
         }
     }
 }
-@Preview(showBackground = true)
-@Composable
-fun TaskInputFormPreview() {
-    TaskInputForm(onAddTask = { /* Exemple d'action, peut rester vide pour la prévisualisation */ })
-}
+

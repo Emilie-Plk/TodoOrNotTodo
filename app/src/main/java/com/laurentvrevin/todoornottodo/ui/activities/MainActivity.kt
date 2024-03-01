@@ -3,13 +3,14 @@ package com.laurentvrevin.todoornottodo.ui.activities
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
+import androidx.compose.animation.AnimatedVisibility
+
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,15 +18,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.window.Dialog
+
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.laurentvrevin.todoornottodo.viewmodels.TaskViewModel
-import com.laurentvrevin.todoornottodo.compose.components.MonFloatingActionButton
+import com.laurentvrevin.todoornottodo.compose.components.CustomFloatingButton
 import com.laurentvrevin.todoornottodo.compose.screens.BottomSheetScreen
-import com.laurentvrevin.todoornottodo.compose.screens.TaskInputForm
-import com.laurentvrevin.todoornottodo.data.model.Task
+import com.laurentvrevin.todoornottodo.compose.screens.TaskListScreen
+
 import com.laurentvrevin.todoornottodo.ui.theme.TodoOrNotTodoTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,60 +35,39 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TodoOrNotTodoTheme {
-                //MainScreen()
-                BottomSheetScreen()
+                MainContent()
+                TaskListScreen()
             }
         }
     }
 }
 
 @Composable
-fun MainScreen() {
+fun MainContent() {
+    // État pour contrôler l'affichage de la Bottom Sheet
+    var showBottomSheet by remember { mutableStateOf(false) }
     val taskViewModel: TaskViewModel = hiltViewModel()
-    var showTaskInput by remember { mutableStateOf(false) }
+
     Scaffold(
         floatingActionButton = {
-            MonFloatingActionButton(onClick = { showTaskInput = true })
+            AnimatedVisibility(visible = !showBottomSheet) {
+                CustomFloatingButton(onClick = { showBottomSheet = true })
+            }
         }
     ) { innerPadding ->
-        Surface(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(color = Color.Green)
         ) {
-            if (showTaskInput) {
-                ShowFullDialog(
-                    onDismissRequest = { showTaskInput = false },
-                    onAddTask = { task ->
-                    taskViewModel.addTask(task)
-                    showTaskInput = false
-                })
-            } else {
-                Greeting("Android")
+            if (showBottomSheet) {
+                BottomSheetScreen(
+                    taskViewModel = taskViewModel,
+                    onDismiss = { showBottomSheet = false }
+                )
             }
         }
     }
 }
-@Composable
-fun ShowFullDialog(onDismissRequest: () -> Unit, onAddTask: (Task) -> Unit) {
-    Dialog(onDismissRequest = { onDismissRequest() }) {
-        TaskInputForm(onAddTask = onAddTask)
-    }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TodoOrNotTodoTheme {
-        Greeting("Android")
-    }
-}

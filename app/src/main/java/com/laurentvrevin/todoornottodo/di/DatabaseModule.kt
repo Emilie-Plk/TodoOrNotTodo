@@ -16,8 +16,11 @@ import javax.inject.Singleton
 object DatabaseModule {
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext appContext: Context): AppDatabase =
-        Room.databaseBuilder(appContext, AppDatabase::class.java, "todo_database").build()
+    fun provideDatabase(@ApplicationContext appContext: Context): AppDatabase {
+
+        return Room.databaseBuilder(appContext, AppDatabase::class.java, "todo_database").build()
+    }
+
 
     @Provides
     fun provideTaskDao(database: AppDatabase): TaskDao = database.taskDao()
