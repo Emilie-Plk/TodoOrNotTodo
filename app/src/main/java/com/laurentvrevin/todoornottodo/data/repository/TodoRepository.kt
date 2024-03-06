@@ -19,10 +19,11 @@ class TodoRepository @Inject constructor(private val taskDao: TaskDao) {
             taskDao.deleteTask(task.id)
         }
     }
-    suspend fun updateTodo(isCompleted:Boolean, id:Int){
+    suspend fun updateTodo(task: Task) {
         withContext(Dispatchers.IO) {
-            taskDao.updateTask(isCompleted, id)
+            taskDao.updateTask(task)
         }
     }
+
 
 }

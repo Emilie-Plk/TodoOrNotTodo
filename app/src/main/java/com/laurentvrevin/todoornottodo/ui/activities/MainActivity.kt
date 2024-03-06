@@ -62,49 +62,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun MainContent() {
-    // État pour contrôler l'affichage de la Bottom Sheet
-    var showBottomSheet by remember { mutableStateOf(false) }
-    val taskViewModel: TaskViewModel = hiltViewModel()
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        TaskListScreen(taskViewModel = taskViewModel)
-        FloatingActionButton(
-            onClick = { showBottomSheet = !showBottomSheet },
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(16.dp)
-        )
-        {
-            Icon(Icons.Filled.Add, contentDescription = "Add")
-        }
-        // Zone transparente pour détecter les clics en dehors de la Bottom Sheet
-        if (showBottomSheet) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clickable { showBottomSheet = false }
-            ) {
-                // Prevent clicks through the box
-            }
-
-            // Contenu de la Bottom Sheet positionné en bas
-            Box(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .background(Color.White) // Utilise la couleur de ton choix ici
-                    .clickable { } // Absorbe les clics pour éviter la fermeture par le Box derrière
-            ) {
-                TaskInputForm(onAddTask = { task ->
-                    taskViewModel.addTask(task)
-                    showBottomSheet = false
-                })
-            }
-        }
-    }
-}
 
 

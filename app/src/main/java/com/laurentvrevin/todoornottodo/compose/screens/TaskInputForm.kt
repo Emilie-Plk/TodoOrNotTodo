@@ -24,13 +24,13 @@ import androidx.compose.ui.unit.dp
 import com.laurentvrevin.todoornottodo.data.model.Task
 
 @Composable
-fun TaskInputForm(onAddTask: (Task) -> Unit) {
+fun TaskInputForm(task: Task? = null, onAddTask: (Task) -> Unit, onEditTask: (Task) -> Unit) {
     // State for form fields
     var id by remember { mutableIntStateOf(0) }
-    var title by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
-    var datetime by remember { mutableStateOf("") }
-    var deadline by remember { mutableStateOf("") }
+    var title by remember { mutableStateOf(task?.title ?:"") }
+    var description by remember { mutableStateOf(task?.description?:"") }
+    var datetime by remember { mutableStateOf(task?.datetime?:"") }
+    var deadline by remember { mutableStateOf(task?.deadline?:"") }
 
     Surface(
         modifier = Modifier
@@ -72,23 +72,29 @@ fun TaskInputForm(onAddTask: (Task) -> Unit) {
             )
             Button(
                 onClick = {
-                    onAddTask(
-                        Task(
-                            title = title,
-                            description = description,
-                            datetime = datetime,
-                            deadline = deadline,
-                            id = id
+                    val taskToSubmit = (
+                            Task(
+                                title = title,
+                                description = description,
+                                datetime = datetime,
+                                deadline = deadline,
+                                id = id
+                            )
                         )
-                    )
-                    // Reset fields after submission
-                    title = ""
-                    description = ""
-                    datetime = ""
-                    deadline = ""
+                        // Reset fields after submission
+                        title = ""
+                        description = ""
+                        datetime = ""
+                        deadline = ""
+                    if (task == null) {
+                        onAddTask(taskToSubmit)
+                    } else {
+                        onEditTask?.invoke(task.copy(title=title, description = description, datetime = datetime, deadline = deadline))
+                    }
+
                 }
             ) {
-                Text("Add Task")
+                Text(if (task==null) "Add Task" else "Update Task")
             }
         }
     }
