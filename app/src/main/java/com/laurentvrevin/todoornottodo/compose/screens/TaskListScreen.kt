@@ -9,6 +9,8 @@ import androidx.compose.runtime.getValue
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.laurentvrevin.todoornottodo.compose.components.TaskCard
+import com.laurentvrevin.todoornottodo.data.model.Task
+import com.laurentvrevin.todoornottodo.data.model.TaskStatus
 
 import com.laurentvrevin.todoornottodo.viewmodels.TaskViewModel
 
@@ -17,9 +19,10 @@ import com.laurentvrevin.todoornottodo.viewmodels.TaskViewModel
 fun TaskListScreen(taskViewModel: TaskViewModel = hiltViewModel()) {
 
     val tasks by taskViewModel.tasks.collectAsState(initial = emptyList())
+    val sortedTasks = tasks.sortedWith(compareBy<Task> { it.status == TaskStatus.DONE }.thenBy { it.createDate })
 
     LazyColumn {
-        items(tasks) { task ->
+        items(sortedTasks) { task ->
             TaskCard(
                 task = task,
                 onEdit = {

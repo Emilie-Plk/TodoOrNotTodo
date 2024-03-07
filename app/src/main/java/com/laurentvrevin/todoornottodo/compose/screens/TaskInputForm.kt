@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -22,8 +23,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.laurentvrevin.todoornottodo.compose.components.PrioritySelector
+import com.laurentvrevin.todoornottodo.compose.components.ShowDatePicker
 import com.laurentvrevin.todoornottodo.compose.components.StatusSelector
 import com.laurentvrevin.todoornottodo.data.model.Task
 import com.laurentvrevin.todoornottodo.data.model.TaskPriority
@@ -36,12 +39,14 @@ import java.util.Locale
 fun TaskInputForm(task: Task? = null, onAddOrUpdateTask: (Task) -> Unit) {
     // Format pour la conversion de Date en String et vice-versa
     val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    var selectedDate by remember { mutableStateOf(task?.deadline ?: Date()) }
 
     var title by remember { mutableStateOf(task?.title ?: "") }
     var description by remember { mutableStateOf(task?.description ?: "") }
     var deadlineString by remember { mutableStateOf(task?.deadline?.let { dateFormat.format(it) } ?: "") }
     var status by remember { mutableStateOf(task?.status ?: TaskStatus.TO_DO) }
     var priority by remember { mutableStateOf(task?.priority ?: TaskPriority.NORMAL) }
+    var showDatePicker by remember { mutableStateOf(false) }
 
     Surface(
         modifier = Modifier
@@ -64,7 +69,6 @@ fun TaskInputForm(task: Task? = null, onAddOrUpdateTask: (Task) -> Unit) {
                 label = { Text("Title") }
             )
             TextField(
-
                 modifier = Modifier
                     .padding(8.dp)
                     .heightIn(100.dp),
@@ -73,7 +77,18 @@ fun TaskInputForm(task: Task? = null, onAddOrUpdateTask: (Task) -> Unit) {
                 onValueChange = { description = it },
                 label = { Text("Description") }
             )
-
+            // Bouton pour ouvrir le DatePicker
+            OutlinedButton(
+                onClick = { showDatePicker = true }
+            ) {
+                Text(text = if (deadlineString.isEmpty()) "Select Deadline" else deadlineString)
+            }
+            if (showDatePicker) {
+                ShowDatePicker(currentDate = selectedDate) {date ->
+                    selectedDate = date
+                    showDatePicker = false
+                }
+            }
 
             // Sélecteurs pour le statut et la priorité
             StatusSelector(status = status, onStatusSelected = { status = it })
@@ -102,6 +117,13 @@ fun TaskInputForm(task: Task? = null, onAddOrUpdateTask: (Task) -> Unit) {
                 Text(text = if (task == null) "Add Task" else "Update Task")
             }
         }
+    }
+}
+@Preview
+@Composable
+fun previewTaskInputForm(){
+    TaskInputForm {
+
     }
 }
 
