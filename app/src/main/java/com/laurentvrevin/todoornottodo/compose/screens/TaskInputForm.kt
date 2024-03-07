@@ -1,7 +1,9 @@
 package com.laurentvrevin.todoornottodo.compose.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,91 +14,95 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import com.laurentvrevin.todoornottodo.compose.components.PrioritySelector
+import com.laurentvrevin.todoornottodo.compose.components.StatusSelector
 import com.laurentvrevin.todoornottodo.data.model.Task
+import com.laurentvrevin.todoornottodo.data.model.TaskPriority
+import com.laurentvrevin.todoornottodo.data.model.TaskStatus
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
-fun TaskInputForm(task: Task? = null, onAddTask: (Task) -> Unit, onEditTask: (Task) -> Unit) {
-    // State for form fields
-    var id by remember { mutableIntStateOf(0) }
-    var title by remember { mutableStateOf(task?.title ?:"") }
-    var description by remember { mutableStateOf(task?.description?:"") }
-    var datetime by remember { mutableStateOf(task?.datetime?:"") }
-    var deadline by remember { mutableStateOf(task?.deadline?:"") }
+fun TaskInputForm(task: Task? = null, onAddOrUpdateTask: (Task) -> Unit) {
+    // Format pour la conversion de Date en String et vice-versa
+    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+    var title by remember { mutableStateOf(task?.title ?: "") }
+    var description by remember { mutableStateOf(task?.description ?: "") }
+    var deadlineString by remember { mutableStateOf(task?.deadline?.let { dateFormat.format(it) } ?: "") }
+    var status by remember { mutableStateOf(task?.status ?: TaskStatus.TO_DO) }
+    var priority by remember { mutableStateOf(task?.priority ?: TaskPriority.NORMAL) }
 
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(15.dp, 15.dp, 0.dp, 0.dp)),
-        shadowElevation = 32.dp,
+            .clip(RoundedCornerShape(15.dp))
+            .padding(8.dp)
     ) {
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(16.dp),
+                .background(Color.White)
+                .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TextField(
-                modifier = Modifier.padding(8.dp, 16.dp, 8.dp, 8.dp),
+                modifier = Modifier.padding(8.dp),
                 value = title,
                 onValueChange = { title = it },
                 label = { Text("Title") }
             )
             TextField(
-                modifier = Modifier.padding(8.dp),
+
+                modifier = Modifier
+                    .padding(8.dp)
+                    .heightIn(100.dp),
+                maxLines = 5,
                 value = description,
                 onValueChange = { description = it },
                 label = { Text("Description") }
             )
-            TextField(
-                modifier = Modifier.padding(8.dp),
-                value = datetime,
-                onValueChange = { datetime = it },
-                label = { Text("Date & Time") }
-            )
-            TextField(
-                modifier = Modifier.padding(8.dp),
-                value = deadline,
-                onValueChange = { deadline = it },
-                label = { Text("Deadline") }
-            )
+
+
+            // Sélecteurs pour le statut et la priorité
+            StatusSelector(status = status, onStatusSelected = { status = it })
+            PrioritySelector(priority = priority, onPrioritySelected = { priority = it })
+
             Button(
                 onClick = {
-                    val taskToSubmit = (
-                            Task(
-                                title = title,
-                                description = description,
-                                datetime = datetime,
-                                deadline = deadline,
-                                id = id
-                            )
-                        )
-                        // Reset fields after submission
-                        title = ""
-                        description = ""
-                        datetime = ""
-                        deadline = ""
-                    if (task == null) {
-                        onAddTask(taskToSubmit)
-                    } else {
-                        onEditTask?.invoke(task.copy(title=title, description = description, datetime = datetime, deadline = deadline))
-                    }
-
+                    val deadline = try { dateFormat.parse(deadlineString) } catch (e: Exception) { Date() } // Gestion sûre de la conversion de date
+                    val newOrUpdatedTask = task?.copy(
+                        title = title,
+                        description = description,
+                        deadline = deadline ?: Date(),
+                        status = status,
+                        priority = priority
+                    ) ?: Task(
+                        title = title,
+                        description = description,
+                        createDate = Date(),
+                        deadline = deadline ?: Date(),
+                        status = status,
+                        priority = priority
+                    )
+                    onAddOrUpdateTask(newOrUpdatedTask)
                 }
             ) {
-                Text(if (task==null) "Add Task" else "Update Task")
+                Text(text = if (task == null) "Add Task" else "Update Task")
             }
         }
     }
 }
+
 

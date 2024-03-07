@@ -6,14 +6,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.laurentvrevin.todoornottodo.compose.components.TaskCard
-import com.laurentvrevin.todoornottodo.data.model.Task
+
 import com.laurentvrevin.todoornottodo.viewmodels.TaskViewModel
 
 
@@ -30,7 +26,8 @@ fun TaskListScreen(taskViewModel: TaskViewModel = hiltViewModel()) {
                     taskViewModel.currentTask = task
                     taskViewModel.showBottomSheet = true
                 },
-                onDelete = { taskViewModel.deleteTask(task) }
+                onDelete = { taskViewModel.deleteTask(task) },
+                onToggleDone = { task, isDone -> taskViewModel.onTaskStatusChanged(task, isDone) }
             )
         }
     }

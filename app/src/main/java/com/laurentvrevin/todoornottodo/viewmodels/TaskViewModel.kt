@@ -1,11 +1,13 @@
 package com.laurentvrevin.todoornottodo.viewmodels
 
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.laurentvrevin.todoornottodo.data.model.Task
+import com.laurentvrevin.todoornottodo.data.model.TaskStatus
 import com.laurentvrevin.todoornottodo.data.repository.TodoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,6 +18,7 @@ class TaskViewModel @Inject constructor(private val repository: TodoRepository) 
     val tasks = repository.selectAll
     var currentTask: Task? by mutableStateOf(null)
     var showBottomSheet: Boolean by mutableStateOf(false)
+
 
     //add a task
     fun addTask(task: Task){
@@ -32,5 +35,10 @@ class TaskViewModel @Inject constructor(private val repository: TodoRepository) 
         viewModelScope.launch {
             repository.deleteTodo(task)
         }
+    }
+    fun onTaskStatusChanged(task: Task, isDone: Boolean){
+        val newStatus = if (isDone) TaskStatus.DONE else TaskStatus.TO_DO
+        val updateTask = task.copy(status = newStatus)
+        updateTask(updateTask)
     }
 }
