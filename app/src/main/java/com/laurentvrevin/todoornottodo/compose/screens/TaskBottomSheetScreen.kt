@@ -19,9 +19,13 @@ import androidx.compose.ui.graphics.Color
 
 import androidx.compose.ui.unit.dp
 import com.laurentvrevin.todoornottodo.compose.components.CustomFloatingButton
+import com.laurentvrevin.todoornottodo.domain.model.Task
+import com.laurentvrevin.todoornottodo.domain.model.TaskPriority
+import com.laurentvrevin.todoornottodo.domain.model.TaskStatus
 
 
 import com.laurentvrevin.todoornottodo.viewmodels.TaskViewModel
+import java.util.Date
 
 @Composable
 fun TaskBottomSheet(taskViewModel: TaskViewModel) {
@@ -64,7 +68,15 @@ fun TaskBottomSheet(taskViewModel: TaskViewModel) {
                     .padding(bottom = 16.dp)
             ) {
                 TaskInputForm(
-                    task = taskViewModel.currentTask,
+                    task = taskViewModel.currentTask ?: Task(
+                        id = 0,
+                        title = "",
+                        description = "",
+                        createDate = Date(),
+                        deadline = Date(),
+                        status = TaskStatus.TO_DO,
+                        priority = TaskPriority.NORMAL
+                    ),
                     onAddOrUpdateTask = { task ->
                         if (task.id == 0) {
                             taskViewModel.addTask(task)

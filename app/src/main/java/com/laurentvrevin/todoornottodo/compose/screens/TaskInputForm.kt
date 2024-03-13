@@ -22,21 +22,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.laurentvrevin.todoornottodo.compose.components.PrioritySelector
 import com.laurentvrevin.todoornottodo.compose.components.ShowDatePicker
 import com.laurentvrevin.todoornottodo.compose.components.StatusSelector
-import com.laurentvrevin.todoornottodo.data.model.Task
-import com.laurentvrevin.todoornottodo.data.model.TaskPriority
-import com.laurentvrevin.todoornottodo.data.model.TaskStatus
+import com.laurentvrevin.todoornottodo.domain.model.Task
+import com.laurentvrevin.todoornottodo.domain.model.TaskPriority
+import com.laurentvrevin.todoornottodo.domain.model.TaskStatus
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 @Composable
-fun TaskInputForm(task: Task? = null, onAddOrUpdateTask: (Task) -> Unit) {
+fun TaskInputForm(task: Task, onAddOrUpdateTask: (Task) -> Unit) {
     // Format pour la conversion de Date en String et vice-versa
     val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     var selectedDate by remember { mutableStateOf(task?.deadline ?: Date()) }
@@ -96,24 +95,23 @@ fun TaskInputForm(task: Task? = null, onAddOrUpdateTask: (Task) -> Unit) {
 
             Button(
                 onClick = {
-                    val deadline = try { dateFormat.parse(deadlineString) } catch (e: Exception) { Date() } // Gestion sûre de la conversion de date
-                    val newOrUpdatedTask = task?.copy(
+                    val newOrUpdatedTask = task.copy(
                         title = title,
                         description = description,
-                        deadline = deadline ?: Date(),
+                        deadline = selectedDate,
                         status = status,
                         priority = priority
                     ) ?: Task(
                         title = title,
                         description = description,
                         createDate = Date(),
-                        deadline = deadline ?: Date(),
+                        deadline = selectedDate,
                         status = status,
                         priority = priority
                     )
                     onAddOrUpdateTask(newOrUpdatedTask)
                 }
-            ) {
+            )  {
                 Text(text = if (task == null) "Add Task" else "Update Task")
             }
         }
@@ -122,9 +120,7 @@ fun TaskInputForm(task: Task? = null, onAddOrUpdateTask: (Task) -> Unit) {
 @Preview
 @Composable
 fun previewTaskInputForm(){
-    TaskInputForm {
 
-    }
 }
 
 

@@ -14,6 +14,7 @@ class TodoOrNotTodoApplication:Application(){
     // Remplace "nom_de_ta_base_de_donnees" par le nom réel de ta base de données
     //deleteAndRecreateDatabase(this, "todo_database")
     }
+
     private fun deleteAndRecreateDatabase(context: Context, dbName: String) {
         val dbFile = context.getDatabasePath(dbName)
         if (dbFile.exists()) {

@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.data.model
+package com.laurentvrevin.todoornottodo.domain.model
 
 enum class TaskPriority {
     LOW,
