@@ -4,11 +4,11 @@
 
 ## Caractéristiques ✨
 
-- Ajouter de nouvelles tâches avec titre, description, priorité et échéance. 🔖
+- Ajouter de nouvelles tâches avec titre, description (et à terme : priorité et échéance). 🔖
 - Modifier les détails des tâches existantes. 📝
 - Marquer les tâches comme terminées. ✅
 - Supprimer les tâches de la liste. 🗑️
-- Filtrer et trier les tâches par statut ou priorité. 🔍
+- Filtrer et trier les tâches par statut ou priorité (prochainement). 🔍
 
 ## Technologies Utilisées 🧰
 
