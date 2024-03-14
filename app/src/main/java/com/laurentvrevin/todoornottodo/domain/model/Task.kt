@@ -1,7 +1,6 @@
 package com.laurentvrevin.todoornottodo.domain.model
 
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
+
 import java.util.Date
 
 data class Task(

@@ -1,7 +1,7 @@
 package com.laurentvrevin.todoornottodo.data.repository
 
 import com.laurentvrevin.todoornottodo.data.dao.TaskDao
-import com.laurentvrevin.todoornottodo.data.model.TaskEntity
+import com.laurentvrevin.todoornottodo.data.entities.TaskEntity
 import com.laurentvrevin.todoornottodo.domain.model.Task
 import com.laurentvrevin.todoornottodo.domain.model.TaskPriority
 import com.laurentvrevin.todoornottodo.domain.model.TaskStatus

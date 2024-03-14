@@ -7,7 +7,7 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class TodoOrNotTodoApplication:Application(){
-    override fun onCreate() {
+    /*override fun onCreate() {
         super.onCreate()
 
     //Le code ci-dessous me sert uniquement pour les tests de la bdd
@@ -31,5 +31,5 @@ class TodoOrNotTodoApplication:Application(){
             // Log si la base de données n'existe pas
             Log.d("DatabaseReset", "La base de données $dbName n'existe pas, aucune suppression nécessaire.")
         }
-    }
+    }*/
 }

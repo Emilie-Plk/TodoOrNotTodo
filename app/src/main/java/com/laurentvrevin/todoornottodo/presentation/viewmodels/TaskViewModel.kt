@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.viewmodels
+package com.laurentvrevin.todoornottodo.presentation.viewmodels
 
 
 import androidx.compose.runtime.getValue
@@ -6,42 +6,45 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.laurentvrevin.todoornottodo.data.model.TaskEntity
 import com.laurentvrevin.todoornottodo.domain.model.TaskStatus
-import com.laurentvrevin.todoornottodo.data.repository.TodoRepositoryImpl
 import com.laurentvrevin.todoornottodo.domain.model.Task
-import com.laurentvrevin.todoornottodo.domain.repository.TodoRepository
+import com.laurentvrevin.todoornottodo.domain.usecases.AddTaskUseCase
+import com.laurentvrevin.todoornottodo.domain.usecases.DeleteTaskUseCase
+import com.laurentvrevin.todoornottodo.domain.usecases.GetAllTasksUseCase
+import com.laurentvrevin.todoornottodo.domain.usecases.UpdateTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TaskViewModel @Inject constructor(private val repository: TodoRepository) : ViewModel() {
+class TaskViewModel @Inject constructor(
+    private val getAllTasksUseCase: GetAllTasksUseCase,
+    private val addTaskUseCase: AddTaskUseCase,
+    private val updateTaskUseCase: UpdateTaskUseCase,
+    private val deleteTaskUseCase: DeleteTaskUseCase) : ViewModel() {
 
-    val tasks = repository.getAllTasks()
-
-
+    val tasks = getAllTasksUseCase.invoke()
     var currentTask: Task? = null
     var showBottomSheet: Boolean by mutableStateOf(false)
 
     // Ajoute une tâche
     fun addTask(task: Task) {
         viewModelScope.launch {
-            repository.insertTask(task)
+            addTaskUseCase(task)
         }
     }
 
     // Met à jour une tâche
     fun updateTask(task: Task) {
         viewModelScope.launch {
-            repository.updateTask(task)
+           updateTaskUseCase(task)
         }
     }
 
     // Supprime une tâche
     fun deleteTask(task: Task) {
         viewModelScope.launch {
-            repository.deleteTask(task.id)
+            deleteTaskUseCase(task.id)
         }
     }
 

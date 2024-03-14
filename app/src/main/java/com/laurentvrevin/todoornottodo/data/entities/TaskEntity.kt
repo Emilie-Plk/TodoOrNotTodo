@@ -1,11 +1,9 @@
-package com.laurentvrevin.todoornottodo.data.model
+package com.laurentvrevin.todoornottodo.data.entities
 
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.laurentvrevin.todoornottodo.domain.model.TaskPriority
-import com.laurentvrevin.todoornottodo.domain.model.TaskStatus
 
 import java.util.Date
 
@@ -20,6 +18,4 @@ data class TaskEntity (
     @ColumnInfo(name = "status") val status: String,
     @ColumnInfo(name = "priority") val priority: String,
     @ColumnInfo(name = "order") val order: Int? = null
-) {
-
-}
+)

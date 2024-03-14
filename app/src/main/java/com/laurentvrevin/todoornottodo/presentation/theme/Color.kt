@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.ui.theme
+package com.laurentvrevin.todoornottodo.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

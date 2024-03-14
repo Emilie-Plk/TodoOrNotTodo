@@ -1,9 +1,7 @@
 package com.laurentvrevin.todoornottodo.domain.repository
 
-import com.laurentvrevin.todoornottodo.data.model.TaskEntity
 import com.laurentvrevin.todoornottodo.domain.model.Task
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
 interface TodoRepository {
     fun getAllTasks(): Flow<List<Task>>

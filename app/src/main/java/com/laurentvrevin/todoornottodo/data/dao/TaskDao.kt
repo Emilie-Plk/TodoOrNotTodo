@@ -7,7 +7,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.laurentvrevin.todoornottodo.data.model.TaskEntity
+import com.laurentvrevin.todoornottodo.data.entities.TaskEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

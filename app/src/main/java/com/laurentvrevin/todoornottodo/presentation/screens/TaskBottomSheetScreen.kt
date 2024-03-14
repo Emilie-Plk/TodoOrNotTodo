@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.compose.screens
+package com.laurentvrevin.todoornottodo.presentation.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,13 +18,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 
 import androidx.compose.ui.unit.dp
-import com.laurentvrevin.todoornottodo.compose.components.CustomFloatingButton
+import com.laurentvrevin.todoornottodo.presentation.components.CustomFloatingButton
 import com.laurentvrevin.todoornottodo.domain.model.Task
 import com.laurentvrevin.todoornottodo.domain.model.TaskPriority
 import com.laurentvrevin.todoornottodo.domain.model.TaskStatus
 
 
-import com.laurentvrevin.todoornottodo.viewmodels.TaskViewModel
+import com.laurentvrevin.todoornottodo.presentation.viewmodels.TaskViewModel
 import java.util.Date
 
 @Composable

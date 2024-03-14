@@ -1,0 +1,10 @@
+package com.laurentvrevin.todoornottodo.domain.usecases
+
+import com.laurentvrevin.todoornottodo.domain.repository.TodoRepository
+import javax.inject.Inject
+
+class DeleteTaskUseCase @Inject constructor(private val todoRepository: TodoRepository) {
+    suspend operator fun invoke(id: Int){
+        todoRepository.deleteTask(id)
+    }
+}

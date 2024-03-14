@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.compose.screens
+package com.laurentvrevin.todoornottodo.presentation.screens
 
 
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,12 +8,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.laurentvrevin.todoornottodo.compose.components.TaskCard
-import com.laurentvrevin.todoornottodo.data.model.TaskEntity
+import com.laurentvrevin.todoornottodo.presentation.components.TaskCard
 import com.laurentvrevin.todoornottodo.domain.model.Task
 import com.laurentvrevin.todoornottodo.domain.model.TaskStatus
 
-import com.laurentvrevin.todoornottodo.viewmodels.TaskViewModel
+import com.laurentvrevin.todoornottodo.presentation.viewmodels.TaskViewModel
 
 
 @Composable

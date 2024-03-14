@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.compose.components
+package com.laurentvrevin.todoornottodo.presentation.components
 
 import android.app.DatePickerDialog
 import androidx.compose.runtime.Composable

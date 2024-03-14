@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.compose.screens
+package com.laurentvrevin.todoornottodo.presentation.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -24,9 +24,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.laurentvrevin.todoornottodo.compose.components.PrioritySelector
-import com.laurentvrevin.todoornottodo.compose.components.ShowDatePicker
-import com.laurentvrevin.todoornottodo.compose.components.StatusSelector
+import com.laurentvrevin.todoornottodo.presentation.components.PrioritySelector
+import com.laurentvrevin.todoornottodo.presentation.components.ShowDatePicker
+import com.laurentvrevin.todoornottodo.presentation.components.StatusSelector
 import com.laurentvrevin.todoornottodo.domain.model.Task
 import com.laurentvrevin.todoornottodo.domain.model.TaskPriority
 import com.laurentvrevin.todoornottodo.domain.model.TaskStatus

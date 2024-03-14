@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.compose.components
+package com.laurentvrevin.todoornottodo.presentation.components
 
 import androidx.compose.runtime.Composable
 import com.laurentvrevin.todoornottodo.domain.model.TaskStatus
