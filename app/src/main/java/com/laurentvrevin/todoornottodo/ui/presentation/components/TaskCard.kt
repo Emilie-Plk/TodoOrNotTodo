@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.presentation.components
+package com.laurentvrevin.todoornottodo.ui.presentation.components
 
 
 import androidx.compose.foundation.clickable
@@ -24,27 +24,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextDecoration
 
 import androidx.compose.ui.unit.dp
-import com.laurentvrevin.todoornottodo.domain.model.Task
-import com.laurentvrevin.todoornottodo.domain.model.TaskPriority
 import com.laurentvrevin.todoornottodo.domain.model.TaskStatus
+import com.laurentvrevin.todoornottodo.ui.activities.TaskViewState
 
 @Composable
 fun TaskCard(
-    task: Task,
-    onEdit: () -> Unit,
-    onDelete: () -> Unit,
-    onToggleDone: (Task, Boolean) -> Unit,
-    modifier: Modifier = Modifier) {
-
-
-    //I'll see later about colour code
-    val backgroundColor = when (task.priority) {
-        TaskPriority.HIGH -> Color.Red
-        TaskPriority.NORMAL -> Color.Yellow
-        TaskPriority.LOW -> Color.Green
-    }
-
-    var expanded by remember { mutableStateOf(false) }
+    taskViewState: TaskViewState,
+    modifier: Modifier = Modifier
+) {
     val interactionSource = remember { MutableInteractionSource() }
     Card(
         modifier = modifier
@@ -52,8 +39,8 @@ fun TaskCard(
             .fillMaxWidth()
             .clickable(
                 interactionSource = interactionSource,
-                indication = null
-            ) { expanded = !expanded }
+                indication = null,
+            ) { taskViewState.onTaskClicked }
 
     ) {
         Column(
@@ -67,31 +54,30 @@ fun TaskCard(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(
-                        checked = task.status == TaskStatus.DONE,
-                        onCheckedChange = { isChecked ->
-                            onToggleDone(task, isChecked) }
+                        checked = taskViewState.isChecked,
+                        onCheckedChange = taskViewState.onCheckClicked,
                     )
                     Text(
-                        text = task.title,
+                        text = taskViewState.title,
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(start = 8.dp),
-                        textDecoration = if (task.status == TaskStatus.DONE) TextDecoration.LineThrough else TextDecoration.None,
-                        color = if (task.status == TaskStatus.DONE) Color.LightGray else MaterialTheme.colorScheme.onSurface
+                        textDecoration = if (taskViewState.isChecked) TextDecoration.LineThrough else TextDecoration.None,
+                        color =  if (taskViewState.isChecked) Color.LightGray else MaterialTheme.colorScheme.onSurface
                     )
 
                     Spacer(Modifier.weight(1f))
-                    IconButton(onClick = onEdit) {
+                    IconButton(onClick = taskViewState.onEditClicked) {
                         Icon(Icons.Filled.Edit, contentDescription = "Edit")
                     }
-                    IconButton(onClick = onDelete) {
+                    IconButton(onClick = taskViewState.onDeleteClicked) {
                         Icon(Icons.Filled.Delete, contentDescription = "Delete")
                     }
                 }
 
             }
-            if (expanded) {
+            if (taskViewState.isExpandable) {
                 Text(
-                    text = task.description,
+                    text = taskViewState.description,
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(top = 8.dp)
                 )

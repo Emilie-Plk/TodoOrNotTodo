@@ -15,30 +15,25 @@ import javax.inject.Inject
 class TodoRepositoryImpl @Inject constructor(private val taskDao: TaskDao) : TodoRepository {
     val selectAll = taskDao.getAllTasks()
 
+// TODO CRUD
     override fun getAllTasks(): Flow<List<Task>> = taskDao.getAllTasks().map { entities ->
         entities.map { entity -> entity.toDomain() }
     }
 
-    override suspend fun insertTask(task: Task) {
-        withContext(Dispatchers.IO) {
+    override suspend fun insertTask(task: Task) =
             taskDao.insertTask(task.toEntity())
-        }
-    }
 
-
+//TODO: dispatcher Philipp?
     override suspend fun deleteTask(id: Int){
-        withContext(Dispatchers.IO) {
             taskDao.deleteTask(id)
-        }
     }
+
     override suspend fun updateTask(task: Task) {
-        withContext(Dispatchers.IO) {
             taskDao.updateTask(task.toEntity())
-        }
     }
 
 
-
+// TODO c koi sa
     // Extension function to convert TaskEntity to Task
     private fun TaskEntity.toDomain(): Task {
         return Task(

@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.presentation.components
+package com.laurentvrevin.todoornottodo.ui.presentation.components
 
 import android.app.DatePickerDialog
 import androidx.compose.runtime.Composable
@@ -8,7 +8,10 @@ import java.util.Calendar
 import java.util.Date
 
 @Composable
-fun ShowDatePicker(currentDate: Date, onDateSelected: (Date) -> Unit) {
+fun ShowDatePicker(
+    currentDate: Date,
+    onDateSelected: (Date) -> Unit
+) {
     val context = LocalContext.current
     val calendar = Calendar.getInstance().apply {
         time = currentDate

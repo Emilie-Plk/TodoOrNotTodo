@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.presentation.screens
+package com.laurentvrevin.todoornottodo.ui.presentation.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -24,9 +24,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.laurentvrevin.todoornottodo.presentation.components.PrioritySelector
-import com.laurentvrevin.todoornottodo.presentation.components.ShowDatePicker
-import com.laurentvrevin.todoornottodo.presentation.components.StatusSelector
+import com.laurentvrevin.todoornottodo.ui.presentation.components.PrioritySelector
+import com.laurentvrevin.todoornottodo.ui.presentation.components.ShowDatePicker
+import com.laurentvrevin.todoornottodo.ui.presentation.components.StatusSelector
 import com.laurentvrevin.todoornottodo.domain.model.Task
 import com.laurentvrevin.todoornottodo.domain.model.TaskPriority
 import com.laurentvrevin.todoornottodo.domain.model.TaskStatus
@@ -38,7 +38,7 @@ import java.util.Locale
 fun TaskInputForm(task: Task, onAddOrUpdateTask: (Task) -> Unit) {
     // Format pour la conversion de Date en String et vice-versa
     val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-    var selectedDate by remember { mutableStateOf(task?.deadline ?: Date()) }
+    var selectedDate by remember { mutableStateOf(task.deadline ?: Date()) }
 
     var title by remember { mutableStateOf(task?.title ?: "") }
     var description by remember { mutableStateOf(task?.description ?: "") }
@@ -64,7 +64,7 @@ fun TaskInputForm(task: Task, onAddOrUpdateTask: (Task) -> Unit) {
             TextField(
                 modifier = Modifier.padding(8.dp),
                 value = title,
-                onValueChange = { title = it },
+                onValueChange = { title = it},
                 label = { Text("Title") }
             )
             TextField(

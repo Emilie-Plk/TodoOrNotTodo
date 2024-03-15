@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.presentation.components
+package com.laurentvrevin.todoornottodo.ui.presentation.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape

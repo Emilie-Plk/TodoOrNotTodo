@@ -11,11 +11,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
+object RepositoryModule { // TODO: diff entre object et abstract class ou interface?
 
     @Provides
     @Singleton
-    fun provideTodoRepository(taskDao: TaskDao): TodoRepository {
-        return TodoRepositoryImpl(taskDao)
-    }
+    fun provideTodoRepository(taskDao: TaskDao): TodoRepository =
+        TodoRepositoryImpl(taskDao)
 }

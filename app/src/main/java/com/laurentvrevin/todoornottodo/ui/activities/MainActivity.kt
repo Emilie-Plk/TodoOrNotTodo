@@ -6,12 +6,12 @@ import androidx.activity.compose.setContent
 
 
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.laurentvrevin.todoornottodo.presentation.screens.TaskBottomSheet
-import com.laurentvrevin.todoornottodo.presentation.viewmodels.TaskViewModel
+import com.laurentvrevin.todoornottodo.ui.presentation.screens.TaskBottomSheet
+import com.laurentvrevin.todoornottodo.ui.presentation.viewmodels.TaskViewModel
 
-import com.laurentvrevin.todoornottodo.presentation.screens.TaskListScreen
+import com.laurentvrevin.todoornottodo.ui.presentation.screens.TaskListScreen
 
-import com.laurentvrevin.todoornottodo.presentation.theme.TodoOrNotTodoTheme
+import com.laurentvrevin.todoornottodo.ui.presentation.theme.TodoOrNotTodoTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 

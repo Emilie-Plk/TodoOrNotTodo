@@ -1,4 +1,4 @@
-package com.laurentvrevin.todoornottodo.presentation.theme
+package com.laurentvrevin.todoornottodo.ui.presentation.theme
 
 import android.app.Activity
 import android.os.Build
